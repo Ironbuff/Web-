@@ -8,7 +8,8 @@ import { MdKeyboardArrowRight } from 'react-icons/md'
 import { FaBars } from 'react-icons/fa'
 import { FaX } from 'react-icons/fa6'
 import { BiBarChart, BiDollarCircle, BiEnvelope, BiFile, BiFolder, BiTime, BiUser } from 'react-icons/bi'
-
+ 
+https://sumx-website-vercel.vercel.app/
 const Navbar = () => {
 
 const navitems = [
@@ -63,14 +64,13 @@ const navitems = [
                                     </span>
                                     {
                                         isdropped ==items.id && (
-                                            <ul className='md:absolute relative top-0 md:top-15 left-0 z-[50] md:w-[65rem] w-[20rem] h-[25ch] md:grid md:grid-cols-3 flex flex-col md:bg-neutral-50/90 bg-transparent px-8 py-10 space-x-3 rounded-2xl md:shadow-md shadow-transparent'>
+                                            <ul className='md:absolute relative top-0 md:top-15 md:left-0 z-[50] md:w-[65rem] w-[20rem] h-[25ch] md:grid md:grid-cols-3 flex flex-col md:bg-neutral-50/90 bg-transparent px-8 py-10 space-x-3 rounded-2xl md:shadow-md shadow-transparent'>
                                                 {items.options.map((items) => (
                                                     <li key={items.id} 
                                                     className='hover:bg-neutral-50 rounded-xl space-y-3 hover:shadow-sm flex items-center justify-start p-2  text-center transition-all ease-in-out duration-300'
                                                    >
                                                        <div 
-                                                       className='flex flex-row gap-x-2 items-center justify-center'
-                                                        onMouseLeave={()=>setIsdropped(null)}
+                                                       className='flex md:flex-row flex-col gap-x-2 items-center justify-center hover:sm:text-cyan-600 transitio-all ease-in-out duration-300'
                                                     >
                                                         {/* icon part */}
                                                         <div className='md:flex hidden items-center justify-center p-2 bg-cyan-600/10 rounded-xl'>
