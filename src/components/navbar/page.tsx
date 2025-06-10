@@ -8,11 +8,12 @@ import { MdKeyboardArrowRight } from 'react-icons/md'
 import { FaBars } from 'react-icons/fa'
 import { FaX } from 'react-icons/fa6'
 import { BiBarChart, BiDollarCircle, BiEnvelope, BiFile, BiFolder, BiTime, BiUser } from 'react-icons/bi'
- 
-https://sumx-website-vercel.vercel.app/
+import Link from 'next/link'
+
+
 const Navbar = () => {
 
-const navitems = [
+    const navitems = [
         {
             id: 1, links: "", title: "Solution", icon: <IoIosArrowDown />, options: [
                 { id: 1, links: "", title: "Overview", description: "Get an overview of all our solutions", icon: <BiFile size={22} className="text-cyan-500 text-xl" /> },
@@ -29,16 +30,16 @@ const navitems = [
         { id: 2, links: "", title: "Company" },
         { id: 3, links: "", title: "Resources" },
         { id: 4, links: "", title: "Pricing" },
-        { id: 5, links: "", title: "Contact" }
+        { id: 5, links: "/contact", title: "Contact" }
     ]
 
 
     const [mobilenav, setMobilenav] = useState(false)
-    const [isdropped, setIsdropped] = useState<null|number>(null)
+    const [isdropped, setIsdropped] = useState<null | number>(null)
 
 
     return (
-        <nav className='w-full relative flex  flex-row justify-between md:h-[12ch] h-[9ch] bg-white/50 md:px-28 px-5 md:shadow-transparent shadow-md '>
+        <nav className='w-full relative sticky top-0 flex backdrop-blur-3xl flex-row justify-between md:h-[12ch] h-[9ch] bg-white/50 md:px-28 px-5 md:shadow-transparent shadow-md z-50'>
 
             {/* Image Section */}
             <div className='flex flex-row  w-fit items-center justify-between '>
@@ -52,53 +53,56 @@ const navitems = [
                         <li key={items.id}>
                             {items.haschildren ? (
 
-                                <a href={items.links} className='flex  font-extralight relative group items-center md:justify-center justify-between gap-x-3'>
+                                <Link href={items.links} className='flex  font-extralight relative group items-center md:justify-center justify-between gap-x-3'>
                                     {items.title}
-                                    <span className='group-hover:rotate-180 transition-all ease-in-out duration-300' 
-                                    onMouseEnter={() => {
-                                        setIsdropped(items.id)                                    
-                                    }} 
+                                    <span className='group-hover:rotate-180 transition-all ease-in-out duration-300'
+                                        onMouseEnter={() => {
+                                            setTimeout(() => {
+                                                setIsdropped(null)
+                                            }, 3000)
+                                        }}
 
-                                   >
+                                    >
                                         {items.icon}
                                     </span>
                                     {
-                                        isdropped ==items.id && (
+                                        isdropped == items.id && (
                                             <ul className='md:absolute relative top-0 md:top-15 md:left-0 z-[50] md:w-[65rem] w-[20rem] h-[25ch] md:grid md:grid-cols-3 flex flex-col md:bg-neutral-50/90 bg-transparent px-8 py-10 space-x-3 rounded-2xl md:shadow-md shadow-transparent'>
                                                 {items.options.map((items) => (
-                                                    <li key={items.id} 
-                                                    className='hover:bg-neutral-50 rounded-xl space-y-3 hover:shadow-sm flex items-center justify-start p-2  text-center transition-all ease-in-out duration-300'
-                                                   >
-                                                       <div 
-                                                       className='flex md:flex-row flex-col gap-x-2 items-center justify-center hover:sm:text-cyan-600 transitio-all ease-in-out duration-300'
+                                                    <li key={items.id}
+                                                        className='hover:bg-neutral-50 rounded-xl space-y-3 hover:shadow-sm flex items-center justify-start p-2  text-center transition-all ease-in-out duration-300'
+                                                        onMouseLeave={() => setIsdropped(null)}
                                                     >
-                                                        {/* icon part */}
-                                                        <div className='md:flex hidden items-center justify-center p-2 bg-cyan-600/10 rounded-xl'>
-                                                            {items.icon}
+                                                        <div
+                                                            className='flex md:flex-row flex-col gap-x-2 items-center justify-center hover:sm:text-cyan-600 transitio-all ease-in-out duration-300'
+                                                        >
+                                                            {/* icon part */}
+                                                            <div className='md:flex hidden items-center justify-center p-2 bg-cyan-600/10 rounded-xl'>
+                                                                {items.icon}
+                                                            </div>
+                                                            <div className='flex flex-col items-start'>
+                                                                <h1 className='md:text-base text-sm text-black'>
+                                                                    {items.title}
+                                                                </h1>
+                                                                <small className='md:flex hidden text-sm  font-extralight'>
+                                                                    {items.description}
+                                                                </small>
+                                                            </div>
                                                         </div>
-                                                        <div className='flex flex-col items-start'>
-                                                            <h1 className='md:text-base text-sm text-black'>
-                                                                {items.title}
-                                                            </h1>
-                                                            <small className='md:flex hidden text-sm  font-extralight'>
-                                                                {items.description}
-                                                            </small>
-                                                        </div>
-                                                       </div>
                                                     </li>
                                                 ))}
                                             </ul>
                                         )
                                     }
 
-                                </a>
+                                </Link>
 
                             ) :
                                 (
-                                    <a href={items.links} className='flex font-extralight relative group items-center md:justify-center justify-between gap-x-3'>
+                                    <Link href={items.links} className='flex font-extralight relative group items-center md:justify-center justify-between gap-x-3'>
                                         {items.title}
                                         <span className='absolute md:flex hidden left-0 top-10 bottom-0 w-0 h-0.5 bg-blue-600 group-hover:w-[70] transition-all ease-in-out duration-300' />
-                                    </a>
+                                    </Link>
 
                                 )
                             }
@@ -125,6 +129,7 @@ const navitems = [
                     {mobilenav ? <FaX size={20} /> : <FaBars size={20} />}
                 </button>
             </div>
+            
         </nav>
     )
 }
