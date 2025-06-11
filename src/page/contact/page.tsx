@@ -18,7 +18,7 @@ const Contact = () => {
     ]
   
     return (
-    <section className='w-full lg:h-[100vh] h-full flex lg:flex-row flex-col gap-y-10 items-center justify-center gap-x-2 px-28 bg-gradient-to-b from-white to-cyan-100'>
+    <section className='w-full lg:h-[100vh] h-full flex lg:flex-row flex-col gap-y-10 items-center justify-center gap-x-2 px-28 py-20 bg-gradient-to-b from-white to-cyan-100'>
 
         <div className='lg:w-1/2 w-full items-start flex flex-col pt-20 gap-y-10'>
             <h3 className='text-base text-cyan-600'>
@@ -28,7 +28,7 @@ const Contact = () => {
             <h1  className='text-5xl font-semibold text-black'>
                 We’d love to hear from you
             </h1>
-            <p className='text-lg font-light w-2/3 text-black'>
+            <p className='text-lg font-light lg:w-2/3 text-black'>
                 Got questions about SumX? Need support, or want to see how we can streamline your time management and project tracking? Just ask!
             </p>
             {/* Contact us social Media */}
@@ -69,7 +69,7 @@ const Contact = () => {
         </div>
         {/* Contact Us Form */}
         
-        <div className='lg:w-1/2 w-full flex flex-col gap-y-4 pt-18 '>
+        <div className='lg:w-1/2 w-full flex flex-col gap-y-4 pt-18 mx-auto '>
           <h1 className='text-base text-cyan-600 font-light pb-5 hover:underline'> Send Us Your Message ...</h1>
             <form className='p-5 border border-neutral-200 bg-white/30 rounded-2xl shadow-md '>
                 <div className='w-full flex flex-col gap-y-3'>
