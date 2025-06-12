@@ -52,7 +52,7 @@ const Footer = () => {
                                             className="p-5 outline-none border border-neutral-100 bg-neutral-50 rounded-xl placeholder:text-neutral-800 w-full"
                                             placeholder="Enter Your Email"
                                         />
-                                        <h2 className="px-5 py-5 bg-neutral-900 absolute top-0  hover:scale-105 ease-in-out transition-all duration-300 right-0 text-neutral-50 rounded-r-2xl ">
+                                        <h2 className="px-5 py-5 bg-neutral-900 absolute top-0  scale-105 hover:scale-110 ease-in-out transition-all duration-300 right-0 text-neutral-50 rounded-r-2xl ">
                                             Subscribe{" "}
                                         </h2>
                                     </div>

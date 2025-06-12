@@ -1,18 +1,11 @@
 'use client'
 
 import React from "react";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
 import Image from "next/image";
-import Autoplay from "embla-carousel-autoplay";
+import "./Slider.css";
 
 const Slider = () => {
-  const image = [
+  const images = [
     {
       id: 1,
       pic: "https://sumx-website-vercel.vercel.app/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fclient2.240d3d78.png&w=256&q=75",
@@ -40,35 +33,30 @@ const Slider = () => {
     },
   ];
 
-  return (
-    <section className="w-full  md:h-[25ch] h-full flex flex-col items-center justify-center" >
-      <h1 className="text-center">
-        Used by 800+ Highly Productive Teams
-        </h1>
-       <Carousel
-      opts={{
-        align: "start",
-      }}
-      className="w-full max-w-2xl  "
-      plugins={[Autoplay({
-        delay:2000,
-        stopOnInteraction:false
-      })]}
-    >
-      <CarouselContent>
-        {image.map(( index) => (
-          <CarouselItem key={index.id} className="md:basis-1/2 lg:basis-1/3">
-            <div className="px-2">
-               <Image src={index.pic} alt={index.title} width={1920} height={1080} className="object-cover object-fit" />
+  const loopImages = [...images, ...images]; // duplicate for smooth loop
 
-            </div>
-          </CarouselItem>
+  return (
+    <div className="max-w-7xl overflow-hidden mx-auto h-[20rem] "> {/* Only show 4 items (4 * 120px) */}
+    <h1 className="w-full flex items-center justify-center font-semibold py-8 text-lg text-black">
+      Used by 800+ Highly Productive Teams
+    </h1>
+      <div className="slider flex items-center justify-center gap-x-10  animate-slide">
+        {loopImages.map((img, index) => (
+          <div
+            key={`${img.id}-${index}`}
+            className="w-[120px] mx-2  grayscale hover:grayscale-0 transition duration-300 ease-in-out"
+          >
+            <Image
+              src={img.pic}
+              alt={img.title}
+              width={120}
+              height={60}
+              className="object-contain"
+            />
+          </div>
         ))}
-      </CarouselContent>
-      <CarouselPrevious />
-      <CarouselNext />
-    </Carousel>
-    </section>
+      </div>
+    </div>
   );
 };
 
