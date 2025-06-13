@@ -1,10 +1,49 @@
-import React from 'react'
+'use client'
+
+import React, { useEffect, useState } from 'react'
 import { MdKeyboardArrowRight } from 'react-icons/md'
 import bill from '../../../public/heroBannerImage.webp'
 import Image from 'next/image'
+import { gethero } from '@/lib/hero'
 
 const Hero = () => {
-  return (
+  
+  
+ interface Medias{
+    id:number,
+    filename:string,
+ }
+ 
+interface hero {
+    id:number,
+    body:string,
+    footing:string,
+    medias:Medias[],
+ }
+
+    
+ 
+ const [landing,setLanding] = useState<hero|null>(null)
+
+  const api = "https://5m1ql0zh-7256.inc1.devtunnels.ms"
+
+  
+  
+  useEffect(()=>{
+    const fetch = async()=>{
+        const response =  await gethero()
+        setLanding(response.data)
+        console.log(response)
+        console.log(landing)
+    }
+    fetch()
+  },[])
+  
+  
+  
+  
+  
+    return (
     <div className='bg-gradient-to-b from-white to-cyan-50 py-15 px-4 sm:px-6 lg:px-8'>
         {/* top Section */}
         <div className='max-w-3xl mx-auto text-center'>
@@ -14,7 +53,7 @@ const Hero = () => {
             </h1>
             {/* description Section */}
             <p className='mt-6 md:text-2xl tracking-wide text-gray-600'>
-                SumX is a next-generation AI-powered ERP solution designed to streamline operations for back-office teams in government contracting, architecture, engineering, and construction organizations.
+               {landing?.body}
             </p>
             {/* button Section */}
             <div className='flex justify-center flex-row gap-x-3 mt-6 items-center'>
@@ -32,14 +71,17 @@ const Hero = () => {
             {/* bounce in animation */}
             <div>
                 <h1 className='text-base font-semibold py-10 animate-bounce transition-all ease-in-out duration-1000'>
-                    No #1 Trusted AI-powered ERP
+                    {landing?.footing}
                 </h1>
             </div>
         </div>
 
         {/* Image Section */}
         <div className='max-w-5xl mx-auto shadow-md shadow-blue-500'>
-            <Image src={bill} alt='bill-info' width={1440} height={800} className='object-cover rounded-4xl object-left-top h-[200px] md:h-[300px] w-full scale-100 hover:scale-110 transition-all ease-in-out duration-300 '/>
+            {landing?.medias.map((item)=>(
+                 <Image key={item.id} src={`${api}/${item.filename}`} alt='bill-info' width={1440} height={800} className='object-cover rounded-4xl object-left-top h-[200px] md:h-[300px] w-full scale-100 hover:scale-110 transition-all ease-in-out duration-300 '/>
+            ))}
+           
 
         </div>
     </div>
