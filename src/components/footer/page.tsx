@@ -1,29 +1,38 @@
-import React from "react";
+'use client'
+
+import { getFooter } from "@/lib/footer";
+import React, { useEffect, useState } from "react";
 import { BsApple } from "react-icons/bs";
 import { FaFacebookF, FaLinkedin } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { IoLogoInstagram } from "react-icons/io";
 
 const Footer = () => {
-    const Products = [
-        { id: 1, title: "About", links: "" },
-        { id: 2, title: "Careers", links: "" },
-        { id: 3, title: "General Inquires", links: "" },
-        { id: 4, title: "Contact", links: "" },
-    ];
 
-    const Help = [
-        { id: 1, title: "About", links: "" },
-        { id: 2, title: "Careers", links: "" },
-        { id: 3, title: "General Inquires", links: "" },
-        { id: 4, title: "Contact", links: "" },
-    ];
 
-    const contact = [
-        { id: 1, title: "www.sumx.ai" },
-        { id: 2, title: "info@sumx.ai" },
-        { id: 3, title: "Washington, D.C., USA" },
-    ];
+    interface data {
+        id:number,
+        displayName:string,
+        links:string,
+    }
+   
+   const [Products,setProducts] = useState<data[]>([])
+   const[Help,setHelp]=useState<data[]>([])
+   const[contact,setContact]= useState<data[]>([])
+   
+    useEffect(()=>{
+      const fetch = async()=>{
+        const result = await getFooter()
+        const products = result?.data.find(item=>item.displayName==="Products")
+        const help = result?.data.find(item=>item.displayName==="Help Center")
+        const contacts = result?.data.find(item=>item.displayName==="Contact")
+
+        setProducts(products?.children || [])
+        setHelp(help?.children || [])
+        setContact(contacts.children || [])
+      }
+      fetch()
+   },[])
 
     const icon = [
         { id: 1, icon: <FaFacebookF size={25} /> },
@@ -69,7 +78,7 @@ const Footer = () => {
                             {Products.map((item) => (
                                 <li key={item.id} className="list-none  ">
                                     <a href={item.links} className="lg:text-xl text-base ">
-                                        {item.title}
+                                        {item.displayName}
                                     </a>
                                 </li>
                             ))}
@@ -83,7 +92,7 @@ const Footer = () => {
                             {Help.map((item) => (
                                 <li key={item.id} className="list-none  ">
                                     <a href={item.links} className="lg:text-xl text-base ">
-                                        {item.title}
+                                        {item.displayName}
                                     </a>
                                 </li>
                             ))}
@@ -96,7 +105,7 @@ const Footer = () => {
                         <ul className="flex flex-col gap-y-2">
                             {contact.map((item) => (
                                 <li key={item.id} className="lg:text-xl text-base">
-                                    {item.title}
+                                    {item.displayName}
                                 </li>
                             ))}
                         </ul>

@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from 'react'
 import { MdKeyboardArrowRight } from 'react-icons/md'
-import bill from '../../../public/heroBannerImage.webp'
 import Image from 'next/image'
 import { gethero } from '@/lib/hero'
 
@@ -33,8 +32,6 @@ interface hero {
     const fetch = async()=>{
         const response =  await gethero()
         setLanding(response.data)
-        console.log(response)
-        console.log(landing)
     }
     fetch()
   },[])

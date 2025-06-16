@@ -8,6 +8,7 @@ import Slider from "@/components/slider/page";
 import Choose from "@/components/chose/page";
 import Traditional from "@/components/traditional/page";
 import Customer from "@/components/customer/Customer";
+import Faq from "@/components/faq/page";
 
 export default function Home() {
   return (
@@ -18,6 +19,7 @@ export default function Home() {
     <PricingPlans/>
     <Slider/>
     <Choose/>
+    <Faq/>
     <Traditional/>
     <Customer/>
     <Footer/>

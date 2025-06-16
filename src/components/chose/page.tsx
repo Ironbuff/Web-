@@ -1,45 +1,38 @@
 "use client";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "motion/react";
-
-const chose = [
-  {
-    id: 1,
-    title: "AI Integrated",
-    summary:
-      "AI-driven automation to simplify project-based accounting, ensuring accuracy and efficiency in back-office operations.",
-    imgaf:
-      "https://sumx-website-vercel.vercel.app/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FcomplianceReady1.2d589575.png&w=2048&q=75",
-  },
-  {
-    id: 2,
-    title: "Affordable Pricing",
-    summary: "Subscriptions start at $10/user—no long-term commitments.",
-    imgaf:
-      "https://sumx-website-vercel.vercel.app/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FcomplianceReady1.2d589575.png&w=2048&q=75",
-  },
-  {
-    id: 3,
-    title: "Fast Implementation",
-    summary: "Quick setup, plug and play with minimal training.",
-    imgaf:
-      "https://sumx-website-vercel.vercel.app/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FcomplianceReady1.2d589575.png&w=2048&q=75",
-  },
-  {
-    id: 4,
-    title: "Customizable & Scalable",
-    summary:
-      "AI-driven automation to simplify project-based accounting, ensuring accuracy and efficiency in back-office operations.",
-    imgaf:
-      "https://sumx-website-vercel.vercel.app/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FcomplianceReady1.2d589575.png&w=2048&q=75",
-  },
-];
+import { getchose } from "@/lib/chose";
 
 const Choose = () => {
-  const [loadImage, setLoadImage] = useState<null | number>(1);
+
+
+  interface arr{
+    heading:string,
+    filename:string,
+    id:number
+  }
+
+  interface data{
+    heading:string,
+    body:string,
+    id:number,
+    medias:arr[]
+  }
+    const[summary,setSummary]= useState('')
+    const[chose,setChose]= useState<data[]>([]) 
+    const api = "https://5m1ql0zh-7256.inc1.devtunnels.ms"
+
+    useEffect(()=>{
+     const fetch = async()=>{
+       const result = await getchose()
+       setSummary(result.data.body)
+       setChose(result.data.children)
+     }
+     fetch()
+  },[])
+  const [loadImage, setLoadImage] = useState<null | number>(4);
   const selectedItem = chose.find((item) => item.id === loadImage);
-  console.log({loadImage})
 
   return (
     <div 
@@ -62,9 +55,7 @@ const Choose = () => {
         <p 
         className="text-xl mt-2 max-w-8xl"
         >
-          SumX is a next-generation AI-powered ERP solution designed to
-          streamline operations for back-office teams in government contracting,
-          architecture, engineering, and construction organizations.
+          {summary}
         </p>
       </div>
 
@@ -86,8 +77,8 @@ const Choose = () => {
              
 
               <div className="flex flex-col gap-y-3 relative py-5">
-                <h2 className="text-2xl font-semibold">{item.title}</h2>
-                <p className="text-base text-gray-700">{item.summary}</p>
+                <h2 className="text-2xl font-semibold">{item.heading}</h2>
+                <p className="text-base text-gray-700">{item.body}</p>
                  <div className={`absolute bottom-0 left-0 w-full h-[1px] opacity-10 bg-black group-hover:hidden ${loadImage===item.id?"hidden":"absolute"} `}/>
               </div>
             </div>
@@ -104,19 +95,21 @@ const Choose = () => {
           >
             <div className="flex flex-col gap-y-2 max-w-md">
               <h2 className="text-3xl font-bold text-cyan-600">
-                {selectedItem.title} <span className="text-black">CRM</span>
+                {selectedItem.heading} <span className="text-black">CRM</span>
               </h2>
               <p className="text-base font-extralight">
-                {selectedItem.summary}
+                {selectedItem.body}
               </p>
             </div>
-            <Image
-              src={selectedItem.imgaf}
+           {selectedItem.medias && selectedItem.medias.length>0 && (
+             <Image
+              src={`${api}/${selectedItem.medias[0].filename}`}
               width={600}
               height={400}
-              alt={selectedItem.title}
+              alt={selectedItem.heading}
               className="rounded"
             />
+           )}
           </motion.div>
         )}
       </div>

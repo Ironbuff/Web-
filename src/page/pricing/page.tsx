@@ -1,12 +1,39 @@
 'use client'
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Check } from 'lucide-react';
+import { getPrice } from '@/lib/pricing';
 
 
 const PricingPlans = () => {
+    
+    interface value{
+        value:string
+    }
+    
+    
+    interface price{
+         name:string,
+         popular:boolean,
+         price:number,
+         rate:string,
+         purpose:string,
+         features:value[]
+    }
+    
+    
     const [billingCycle, setBillingCycle] = useState('annual');
     const [darkmodefall,setDarkmodefall] = useState<null|number>(null)
+    const [plans,setPlans]= useState<price[]>([])
+
+
+    useEffect(()=>{
+        const fetch= async()=>{
+            const result = await getPrice()
+            setPlans(result.data)    
+        }
+        fetch()
+    },[])
 
     const plans = [
         {
@@ -137,7 +164,7 @@ const PricingPlans = () => {
                                     </div>
                                 )}
                                     <p className={`text-sm ${darkmode?"text-white":"text-gray-900"}`}>
-                                        Per user/month, billed annually
+                                        {item.rate}
                                     </p>
                 
                         </div>
@@ -145,13 +172,13 @@ const PricingPlans = () => {
                         {/* Feature Description */}
                         <div className='flex flex-col gap-y-4'>
                             <h2 className={`text-xl  font-semibold py-3 ${darkmode?"text-white":"text-gray-900"}`}>
-                                {item.description}
+                                {item.purpose}
                             </h2>
                             {/* Feature Listing */}
                             <ul className={`flex flex-col gap-y-1  ${darkmode?"text-white":"text-gray-900"}`}>
                             {item.features.map((item,i)=>(
                                    <li key={i} className={`flex flex-row gap-x-3 lg:text-base text-lg font-extralight items-center justify-start `}>
-                                     <Check className='text-neutral-900 rounded-sm group-hover:bg-green-300  bg-neutral-200 '/> {item}
+                                     <Check className='text-neutral-900 rounded-sm group-hover:bg-green-300  bg-neutral-200 '/> {item.value}
                                    </li>
                             ))}
                            </ul> 
@@ -161,7 +188,7 @@ const PricingPlans = () => {
                         
                         <div className='w-full'>
                             <button className={` my-4 py-2 px-4 w-full shadow-md lg:text-lg  bg-neutral-700 group-hover:scale-105 rounded-xl ${darkmode?"text-neutral-800 bg-white":"text-neutral-300"}`} >
-                                {item.buttonText}
+                                Get started with {item.name}
                             </button>
                         </div>
 

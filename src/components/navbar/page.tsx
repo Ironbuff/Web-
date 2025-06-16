@@ -12,9 +12,27 @@ import Link from 'next/link'
 import { getnavitems } from '@/lib/nav'
 
 const Navbar = () => {
-    const [navitems, setNavitems] = useState([])
+    
+    interface media{
+        id:number,
+        link:string,
+        filename:string,
+        displayName:string,
+        summary:string,
+       
+    }
+    
+    interface data{
+        id:number,
+        link:string,
+        displayName:string,
+        children:media[],
+
+    }
+    
+    const [navitems, setNavitems] = useState<data[]>([])
     const [mobilenav, setMobilenav] = useState(false)
-    const [isdropped, setIsdropped] = useState(null)
+    const [isdropped, setIsdropped] = useState<number|null>(null)
 
    const api = "https://5m1ql0zh-7256.inc1.devtunnels.ms"
 

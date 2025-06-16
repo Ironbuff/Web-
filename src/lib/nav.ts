@@ -13,4 +13,13 @@ export  const getnavitems = async()=>{
    }
 }
 
-export const getcarouselimg = async()=
+export const getcarouselimg = async() => {
+   try{
+
+      const response = await axios.get(`${api}/api/ContentApi/getcontent/Carousel`)
+      return response
+   }
+   catch(err){
+      console.log(err)
+   }
+}
