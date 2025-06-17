@@ -68,7 +68,7 @@ const Faq = () => {
                 <h1 className='text-5xl font-bold leading-relaxed '>
                     Frequently Asked Question
                 </h1>
-                <p className='text-sm leading-relaxed font-light'>
+                <p className='text-base leading-relaxed font-light'>
                     SumX is a next-generation Al-powered ERP solution designed to streamline
                 </p>
             </div>
@@ -82,18 +82,22 @@ const Faq = () => {
                 >
                     <AccordionItem value={item.id.toString()} className='max-w-6xl mx-auto'>
                         
-                        <AccordionTrigger  className="w-full data-state['open']:bg-red-500">
+                        <div className='relative p-3'>
+                        <AccordionTrigger  className="w-full group ">
                            <div className='flex flex-row justify-between items-center w-full'>
-                             <h3 className='text-lg font-bold '>
+                             <h3 className='text-2xl font-base text-black '>
                               {item.question}
                              </h3>
                              <MdKeyboardArrowDown size={30} className=' transition-transform ease-in-out duration-300 group-data-[state=open]:rotate-180' />
                             </div>
-                           
+                              <span className='absolute bottom-0 opacity-5 h-[1px] w-full bg-neutral-900 group-data-[state=open]:hidden flex'>
+
+                              </span>
                         </AccordionTrigger>
+                        </div>
                         
                         <AccordionContent className="flex flex-col gap-4 w-full items-center justify-center">
-                            <p className='flex items-center justify-center w-full font-base p-2 bg-neutral-100'>
+                            <p className='flex items-center justify-center w-full font-base text-lg p-3 bg-neutral-100 rounded-xl'>
                                 {item.answer}
                             </p>
                         </AccordionContent>
