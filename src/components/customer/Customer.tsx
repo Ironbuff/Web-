@@ -40,7 +40,7 @@ const Customer = () => {
   // adding infinite scroll
     const scrollvariant:any = {
       animate:{
-        y:['0%','-50%'],
+        y:['0%','-20%'],
         transition:{
           duration:20,
           repeat:Infinity,
