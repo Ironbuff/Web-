@@ -36,14 +36,14 @@ const Choose = () => {
 
   return (
     <div 
-    className="lg:max-w-screen w-full mx-auto flex flex-col gap-y-3 px-28 py-20 items-center bg-neutral-100 lg:min-h-screen h-full p-8"
+    className="lg:max-w-screen w-full mx-auto flex flex-col gap-y-3 lg:px-28 px-5 py-20 items-center bg-neutral-100 lg:min-h-screen h-full "
     >
       {/* Heading */}
       <div 
       className="flex flex-col gap-y-3 justify-start items-start w-full mb-8"
       >
         <h1 
-        className="text-5xl text-start flex flex-row gap-x-3 font-bold leading-relaxed"
+        className="lg:text-5xl text-3xl text-start flex flex-row gap-x-3 font-bold leading-relaxed"
         >
           Why Choose 
           <span 

@@ -5,6 +5,7 @@ import dayjs from "dayjs";
 import { GoArrowLeft } from "react-icons/go";
 import Link from "next/link";
 import { getblogById } from "@/lib/blog";
+import Loader from "@/components/loader/Loading";
 
 const Blogdetail = () => {
 
@@ -68,7 +69,7 @@ const Blogdetail = () => {
     return `<img${beforeSrc}src="${finalNewSrc}"${afterSrc}>`; // Reconstruct the img tag
   });
 
-  // Sanitize the processed HTML content for security
+ 
  
 
    
@@ -76,14 +77,14 @@ const Blogdetail = () => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center w-full h-screen">
-        Loading.....
+      <div className="flex items-center justify-center w-full h-[calc(100vh-12ch)]">
+        <Loader/>
       </div>
     );
   }
 
   return (
-    <section className="bg-gray-100">
+    <section className="bg-gray-200 h-full">
       <div className="flex flex-col gap-y-3 px-28 py-20  max-w-7xl   mx-auto">
         <div className="flex flex-row items-center justify-start">
           {/* tag section */}
@@ -120,7 +121,7 @@ const Blogdetail = () => {
         {/* tag and date section */}
 
         {/* summary */}
-        <div className="bg-gray-200 p-6 text-neutral-900 rounded-lg border-l-4 border-blue-500 mb-8">
+        <div className="bg-gray-300 p-6 text-neutral-900 rounded-lg border-l-4 border-blue-500 mb-8">
         <p className="text-lg font-semibold italic leading-relaxed pt-5 flex items-center max-w-7xl">
           {blog?.summary}
         </p>
@@ -134,10 +135,10 @@ const Blogdetail = () => {
         {/* Footer */}
         <footer>
           <Link
-            href={"/"}
-            className="text-blue-500 leading-relaxed text-lg hover:text-blue-700 hover:underline transition-all ease-in-out duration-300"
+            href={"/blog"}
+            className="text-blue-500 flex flex-row gap-x-2 items-center leading-relaxed text-lg group hover:text-blue-700 hover:underline transition-all ease-in-out duration-300"
           >
-            View All Blogs {">>"}
+            View All Blogs <GoArrowLeft size={20} className="group-hover:translate-x-1 rotate-180" />
           </Link>
         </footer>
       </div>

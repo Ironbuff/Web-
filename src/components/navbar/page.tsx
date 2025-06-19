@@ -16,7 +16,9 @@ const Navbar = () => {
     interface media{
         id:number,
         link:string,
-        filename:string,
+        icon:{
+            filename:string,
+        }
         displayName:string,
         summary:string,
        
@@ -48,10 +50,12 @@ const Navbar = () => {
     }, [])
 
     return (
-        <nav className='w-full relative sticky top-0 flex backdrop-blur-3xl flex-row justify-between md:h-[12ch] h-[9ch] bg-white/50 md:px-28 px-5 md:shadow-transparent shadow-md z-50'>
+        <nav className='w-full relative sticky top-0 flex backdrop-blur-3xl flex-row justify-between md:h-[12ch] h-[9ch] bg-white/60 md:px-28 px-5 md:shadow-transparent shadow-md z-50'>
             {/* Image Section */}
             <div className='flex flex-row w-fit items-center justify-between'>
+                <Link href={'/'}>
                 <Image alt="Logo-Section" src={profile} />
+                </Link>
             </div>
 
             <div className={`md:flex md:items-center ${mobilenav ? "flex" : "hidden"} md:bg-transparent bg-white z-50 md:flex-row items-start px-2 flex-col gap-y-6 absolute md:relative md:top-0 top-30 left-0 md:w-3/4 w-full md:h-full h-[calc(100vh-18ch)] justify-between`}>
@@ -76,7 +80,7 @@ const Navbar = () => {
                                     
                                     {isdropped === items.id && (
                                         <ul 
-                                            className='md:absolute relative top-0 md:top-15 md:left-0 z-[50] md:w-[65rem] w-[20rem] h-[25ch] md:grid md:grid-cols-3 flex flex-col md:bg-neutral-50/90 bg-transparent px-8 py-10 space-x-3 rounded-2xl md:shadow-md shadow-transparent'
+                                            className='md:absolute relative top-0 md:top-15 md:left-0 z-[50] md:w-[65rem] w-[20rem] h-[25ch] md:grid md:grid-cols-3 flex flex-col md:bg-neutral-50 bg-transparent px-8 py-10 space-x-3 rounded-2xl md:shadow-md shadow-transparent'
                                             onMouseEnter={() => setIsdropped(items.id)}
                                             onMouseLeave={() => setIsdropped(null)}
                                         >

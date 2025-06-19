@@ -40,8 +40,8 @@ const Contact = () => {
 
     try {
      
-      const result = await postContact({fullname,companyLocation,companyName,email,contact,description,agreeToTerms});
-      console.log(result);
+       await postContact({fullname,companyLocation,companyName,email,contact,description,agreeToTerms});
+      
       setSubmitMessage('Message Sucessfully Send')
       setFullname('')
       setEmail('')
@@ -123,11 +123,11 @@ const Contact = () => {
   ];
 
   return (
-    <section className="w-full lg:h-[100vh] h-full flex lg:flex-row flex-col gap-y-10 items-center justify-center gap-x-2 px-28 py-20 bg-gradient-to-b from-white to-cyan-100">
+    <section className="w-full lg:h-[100vh] h-full flex lg:flex-row flex-col gap-y-10 items-center justify-center gap-x-2 lg:px-28 px-5 py-20 bg-gradient-to-b from-white to-cyan-100">
       <div className="lg:w-1/2 w-full items-start flex flex-col pt-20 gap-y-10">
         <h3 className="text-base text-cyan-600">Contact Us</h3>
         {/* heading of contactcontent */}
-        <h1 className="text-5xl font-semibold text-black">
+        <h1 className="lg:text-5xl text-3xl font-semibold text-black">
           We’d love to hear from you
         </h1>
         <p className="text-lg font-light lg:w-2/3 text-black">

@@ -80,19 +80,19 @@ const Customer = () => {
   };
 
   return (
-    <section className="w-full h-full px-28 gap-x-5 overflow-hidden py-10 flex flex-row items-center justify-center">
+    <section className="w-full h-full px-28 py-20 gap-x-5 overflow-hidden  flex flex-row items-center justify-center">
       <div className="flex flex-col items-center justify-center gap-y-5 w-full">
         
         {/* Top Heading */}
         <div className="flex flex-col items-center justify-center gap-y-3  h-1/4">
-          <h1 className="text-5xl font-bold ">Customer Testimonials</h1>
-          <p className="mx-auto font-base text-lg">
+          <h1 className="lg:text-5xl text-4xl font-bold ">Customer Testimonials</h1>
+          <p className="mx-auto font-base text-lg py-10">
             We do it for Customer and they share their reviews
           </p>
         </div>
         
         {/* Bottom Reviews */}
-        <div className="flex flex-row gap-x-6 overflow-hidden w-full items-center py-10  justify-center h-1/2 ">
+        <div className="flex flex-row gap-x-6 overflow-hidden w-full items-center py-10 bg-gradient-to-b from-white to-neutral-10  justify-center h-1/2 ">
           {/* Customer Testomonial */}
           <motion.div
             variants={scrollvariant}
@@ -136,7 +136,7 @@ const Customer = () => {
           <motion.div 
           variants={scrollvariant2}
           animate="animate"
-          className="flex flex-col items-start justify-center gap-y-5 lg:w-1/4 w-2/3">
+          className="flex flex-col items-start justify-center gap-y-5 lg:w-1/4 w-3/4">
             {/* right side customer review part */}
             {[...centerreview,...centerreview,...centerreview].map((item,index) => (
               <div

@@ -51,7 +51,7 @@ const PricingPlans = () => {
 
 
     return (
-        <div className='lg:h-screen h-full lg:max-w-screen w-full px-28 py-10'>
+        <div className='lg:h-screen h-full lg:max-w-screen w-full lg:px-28 px-5 py-10'>
 
             {/* Top Heading */}
             <div className='flex flex-col gap-y-5 items-center justify-center'>
@@ -67,7 +67,7 @@ const PricingPlans = () => {
                     <button
                         onClick={() => setBillingCycle('monthly')}
                         className={`text-base font-normal text-neutral-700 py-4 px-8 rounded-xl tansition-all ${billingCycle === 'monthly'
-                            ? 'bg-black text-white shadow-sm font-semibold'
+                            ? 'bg-cyan-700 text-white shadow-sm font-semibold'
                             : 'text-gray-600 hover:text-gray-900'
 
                             }`}
@@ -78,7 +78,7 @@ const PricingPlans = () => {
                         <button
                             onClick={() => setBillingCycle('yearly')}
                             className={`text-base font-normal text-neutral-700 py-4 px-8 rounded-xl tansition-all ${billingCycle === 'yearly'
-                                ? 'bg-black text-white shadow-sm font-semibold'
+                                ? 'bg-cyan-700 text-white shadow-sm font-semibold'
                                 : 'text-gray-600 hover:text-gray-900'
 
                                 }`}
@@ -155,7 +155,7 @@ const PricingPlans = () => {
                             {/* Button Part */}
 
                             <div className='w-full'>
-                                <button className={` my-4 py-2 px-4 w-full shadow-md lg:text-lg  bg-neutral-700 group-hover:scale-105 rounded-xl ${darkmode ? "text-neutral-800 bg-white" : "text-neutral-300"}`} >
+                                <button className={` my-4 py-2 px-4 w-full  shadow-md lg:text-lg  bg-cyan-700 group-hover:scale-105 rounded-xl ${darkmode ? "text-neutral-800 bg-white" : "text-neutral-100"}`} >
                                     Get started with {item.name}
                                 </button>
                             </div>

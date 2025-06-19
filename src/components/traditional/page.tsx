@@ -43,18 +43,18 @@ const Traditional = () => {
     return (
         <div className='w-full  h-[40rem] flex items-center justify-center'>
             <div className='flex flex-col relative overflow-hidden max-w-7xl bg-cyan-100 gap-y-5  max-h-102 my-auto h-full mx-auto items-center bg justify-center px-20 rounded-2xl'>
-                <h1 className='text-5xl text-center font-bold '>
+                <h1 className='lg:text-5xl text-2xl text-center font-bold '>
                   {title}
                 </h1>
-                <p className='text-lg text-center'>
+                <p className='lg:text-lg text-base text-center leading-relaxed'>
                     {description}
                 </p>
                 {/* Button  */}
                 <div className='flex flex-row items-center justify-center gap-x-2 '>
-                    <button className='p-3 bg-cyan-600 hover:bg-cyan-700 text-neutral-50 rounded-xl transition-all ease-in-out duration-300'>
+                    <button className='lg:p-3 p-2 bg-cyan-600 hover:bg-cyan-700 text-neutral-50 rounded-xl transition-all ease-in-out duration-300'>
                         Get Free Demo
                     </button>
-                    <button className='text-neutral-800 group hover:bg-neutral-100 flex flex-row items-center gap-x-2 rounded-xl p-3 transition-all ease-in-out duration-300  bg-white border border-neutral-800'>
+                    <button className='text-neutral-800 group hover:bg-neutral-100 flex flex-row items-center gap-x-2 rounded-xl lg:p-3 p-2 transition-all ease-in-out duration-300  bg-white border border-neutral-800'>
                         Get Started
                         <span>
                             <MdKeyboardArrowRight className='group-hover:translate-x-1.5' />
