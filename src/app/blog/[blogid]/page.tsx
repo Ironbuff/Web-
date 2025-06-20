@@ -6,6 +6,7 @@ import { GoArrowLeft } from "react-icons/go";
 import Link from "next/link";
 import { getblogById } from "@/lib/blog";
 import Loader from "@/components/loader/Loading";
+import Comment from "@/app/blog/comment/page";
 
 const Blogdetail = () => {
 
@@ -21,9 +22,11 @@ const Blogdetail = () => {
 
    const api = "https://5m1ql0zh-7256.inc1.devtunnels.ms" 
   const params = useParams();
-  const blogid = params.blogid;
+  const blogid = params.blogid as string;
   const [blog, setBlog] = useState<Blogdata | null>(null);
   const [loading, setLoading] = useState(true);
+  const parsedId = parseInt(blogid); // convert to number
+
 
   useEffect(() => {
     const fetch = async () => {
@@ -113,7 +116,7 @@ const Blogdetail = () => {
           {blog?.title}
         </h1>
 
-        <p className="text-sm text-neutral-800 font-light flex flex-row gap-x-3  mb-5">
+        <p className="text-sm text-neutral-100 font-light flex flex-row gap-x-3  mb-5">
           -Published At {dayjs(blog?.publishedAt).format("DD MMM YYYY")}
           <span className="text-orange-400 bg-green-100 text-xs font-semibold px-3 rounded-lg ">{blog?.status}</span>
         </p>
@@ -131,6 +134,10 @@ const Blogdetail = () => {
         <article className="prose lg:prose-lg xl:prose-xl max-w-none w-full border-b pb-12 mb-12 ">
           <div className="content-display " dangerouslySetInnerHTML={{ __html: processedDescription }}></div>
         </article>
+
+
+        {/* Comment Section */}
+        {blogid && <Comment id={parsedId} />}
 
         {/* Footer */}
         <footer>

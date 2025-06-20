@@ -10,6 +10,8 @@ import { FaX } from 'react-icons/fa6'
 
 import Link from 'next/link'
 import { getnavitems } from '@/lib/nav'
+import { refreshAccessToken } from '@/lib/auth'
+import { useRouter } from 'next/navigation'
 
 const Navbar = () => {
     
@@ -35,8 +37,37 @@ const Navbar = () => {
     const [navitems, setNavitems] = useState<data[]>([])
     const [mobilenav, setMobilenav] = useState(false)
     const [isdropped, setIsdropped] = useState<number|null>(null)
+    const router = useRouter()
 
    const api = "https://5m1ql0zh-7256.inc1.devtunnels.ms"
+
+   useEffect(()=>{
+            
+            refresh()
+   },[])
+
+   
+    const refresh = () => {
+        const interval = setInterval(async () => {
+            const accessTokenExpires = localStorage.getItem("acessTokenExpiresIn");
+
+            if (accessTokenExpires && new Date(accessTokenExpires).getTime() <= Date.now()) {
+                try {
+                    await refreshAccessToken(); // Renew access token
+                    console.log("Access token refreshed successfully.");
+                } catch (error) {
+                    console.error("Token refresh failed, logging out...");
+                    localStorage.removeItem("token");
+                    localStorage.removeItem("refreshToken");
+                    localStorage.removeItem("acessTokenExpiresIn");
+                    router.push("/login");
+                    console.log(error)
+                }
+            }
+        }, 60000); // Check every 1 min
+
+        return () => clearInterval(interval);
+    }
 
     const fetch = async () => {
         const response = await getnavitems()
