@@ -22,6 +22,7 @@ const Blog = () => {
   }
 
   const [blogs, setBlogs] = useState<blog[]>([]);
+  const [filteredBlogs, setFilteredBlogs] = useState<blog[] | null>(null)
   const api = "https://5m1ql0zh-7256.inc1.devtunnels.ms";
 
   useEffect(() => {
@@ -31,6 +32,16 @@ const Blog = () => {
     };
     fetch();
   }, []);
+
+  const Newfetch = (tag: string) => {
+    const filtered = blogs.filter(item => item.tags.includes(tag))
+    setFilteredBlogs(filtered)
+  }
+
+  // to reset 
+  const reset = () => {
+    setFilteredBlogs(null)
+  }
 
   // Generate tag count map
   const tagMap = new Map<string, number>();
@@ -43,7 +54,7 @@ const Blog = () => {
     );
 
   return (
-    <section className="w-full bg-gradient-to-b from-white to-cyan-50 h-full py-5 lg:px-28 px-5 flex flex-col gap-y-5 overflow-hidden">
+    <section className="w-full bg-gradient-to-b from-white to-cyan-100 h-full py-5 lg:px-28 px-5 flex flex-col gap-y-5 overflow-hidden">
       {/* heading */}
       <div className="text-center w-full">
         <h1 className="text-4xl text-cyan-600 py-10 font-semibold">Our Blogs</h1>
@@ -54,13 +65,26 @@ const Blog = () => {
       {tagMap.size > 0 && (
         <div className="flex flex-wrap gap-2 justify-center mb-5">
           {[...tagMap.entries()].map(([tag, count]) => (
-            <span
+            <button
               key={tag}
-              className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm"
+              className={`px-3 py-1 rounded-full text-sm transition-all ${filteredBlogs && filteredBlogs[0]?.tags.includes(tag)
+                  ? "bg-cyan-600 scale-105 text-white"
+                  : "bg-neutral-200 text-cyan-600 hover:bg-cyan-100"
+                }`}
+              onClick={() => Newfetch(tag)}
             >
               #{tag} ({count})
-            </span>
+            </button>
           ))}
+          {filteredBlogs &&
+            (
+              <button
+                className="bg-blue-100 text-cyan-500 px-3 py-1 rounded-full text-sm"
+                onClick={reset}
+              >
+                Show All
+              </button>
+            )}
         </div>
       )}
 
@@ -73,7 +97,7 @@ const Blog = () => {
 
       {/* Blog Cards */}
       <div className="grid lg:grid-cols-3 grid-cols-1 gap-5 w-full h-full rounded-xl">
-        {blogs
+        {(filteredBlogs ? filteredBlogs : blogs)
           .filter((b) => b.status === "Active")
           .map((items) => (
             <motion.div
@@ -97,7 +121,7 @@ const Blog = () => {
                     {items.tags.slice(0, 2).map((tag, i) => (
                       <span
                         key={i}
-                        className="p-2 whitespace-nowrap rounded-lg text-base bg-blue-200 text-blue-500"
+                        className="p-2 whitespace-nowrap rounded-lg text-base bg-neutral-200 text-cyan-500"
                       >
                         #{tag}
                       </span>
@@ -108,7 +132,7 @@ const Blog = () => {
 
               {/* Bottom Description */}
               <div className="flex flex-col gap-y-5 px-3 py-3 flex-grow">
-                <h3 className="text-xl italic underline underline-offset-2 font-semibold">
+                <h3 className="text-xl italic underline underline-offset-2 font-serif font-semibold ">
                   {items.title}
                 </h3>
                 <p className="text-base">
@@ -118,7 +142,7 @@ const Blog = () => {
                 </p>
                 <Link
                   href={`/blog/${items.id}`}
-                  className="flex flex-row hover:text-blue-500 hover:underline gap-x-2 group items-center text-blue-400 mt-auto"
+                  className="flex flex-row hover:text-cyan-500 hover:underline gap-x-2 group items-center text-cyan-400 font-semibold mt-auto"
                 >
                   Read More{" "}
                   <GoArrowRight className="-rotate-45 group-hover:rotate-0 transition-all ease-in-out duration-300" />

@@ -37,13 +37,13 @@ export const refreshAccessToken = async()=>{
         accessToken,
     }
 
-    const response = await axios.post(`${api}/api/AuthApi/refreshToken`, data, {
+    const response = await axios.post(`${api}/api/Auth/refreshsignin`, data, {
         headers: { "Content-Type": "application/json" },
     });
 
     if (response.status === 200) {
         localStorage.setItem("token", response.data.token);
-        localStorage.setItem("acessTokenExpiresIn", response.data.accessTokenExpires);
+        localStorage.setItem("acessTokenExpiresIn", response.data.tokenExpires);
         localStorage.setItem("refreshToken",response.data.refreshToken)
         return response.data.token;
     } else {

@@ -56,6 +56,8 @@ const Contact = () => {
       console.log(err);
     }
   };
+
+
   const social = [
     {
       id: 1,
@@ -189,6 +191,7 @@ const Contact = () => {
               placeholder="Enter Name"
               value={fullname}
               onChange={(e) => setFullname(e.target.value)}
+              required
               className="w-full focus:ring-2 focus:ring-cyan-500 border p-2 rounded-xl border-white shadow-sm outline-none "
             />
           </div>
@@ -203,6 +206,7 @@ const Contact = () => {
                 className="outline-none focus:ring-2 focus:ring-cyan-500 border border-white shadow-sm rounded-xl p-2 w-full"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                required
               />
             </div>
             {/* Cotact part */}
@@ -214,6 +218,7 @@ const Contact = () => {
                 className="outline-none focus:ring-2 focus:ring-cyan-500 border border-white shadow-sm rounded-xl p-2 w-full"
                 value={contact}
                 onChange={(e) => setContact(e.target.value)}
+                required
               />
             </div>
           </div>
@@ -228,6 +233,7 @@ const Contact = () => {
                 className="outline-none focus:ring-2 focus:ring-cyan-500 border border-white shadow-sm rounded-xl p-2 w-full"
                 value={companyName}
                 onChange={(e) => setCompanyName(e.target.value)}
+                required
               />
             </div>
             {/* Company Location */}
@@ -239,6 +245,7 @@ const Contact = () => {
                 className="outline-none focus:ring-2 focus:ring-cyan-500 border border-white shadow-sm rounded-xl p-2 w-full"
                 value={companyLocation}
                 onChange={(e) => setCompanyLocation(e.target.value)}
+                required
               />
             </div>
           </div>
@@ -249,6 +256,7 @@ const Contact = () => {
               className="w-full outline-none focus:ring-2 focus:ring-cyan-500 border border-white shadow-sm rounded-xl p-2"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
+              required
             />
           </div>
           {/* Cookie and policy */}
@@ -257,6 +265,7 @@ const Contact = () => {
               type="checkbox"
               checked={agreeToTerms}
               onChange={(e) => setAgreeToTerms(e.target.checked)}
+              required
             />
             <p>
               I agree to SumX sending me communication message as described on{" "}

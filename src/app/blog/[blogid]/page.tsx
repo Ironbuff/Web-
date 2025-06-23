@@ -33,7 +33,6 @@ const Blogdetail = () => {
       try {
         const id = parseInt(blogid)
         const result = await getblogById(id)
-        console.log(result)
         if (result.status === 200) {
           setBlog(result.data)
           setLoading(false)
@@ -88,7 +87,7 @@ const Blogdetail = () => {
 
   return (
     <section className="bg-gray-200 h-full">
-      <div className="flex flex-col gap-y-3 px-28 py-20  max-w-7xl   mx-auto">
+      <div className="flex flex-col gap-y-3 lg:px-28 px-5 py-20  max-w-7xl   mx-auto">
         <div className="flex flex-row items-center justify-start">
           {/* tag section */}
           <ul className="flex flex-row gap-x-2">
@@ -111,12 +110,14 @@ const Blogdetail = () => {
           </ul>
         </div>
 
+        
+
         {/* Top Heading */}
-        <h1 className="text-4xl text-neutral-800 flex w-full items-center justify-start font-semibold ">
+        <h1 className="text-4xl text-neutral-800 flex w-full items-center justify-start font-bold ">
           {blog?.title}
         </h1>
 
-        <p className="text-sm text-neutral-100 font-light flex flex-row gap-x-3  mb-5">
+        <p className="text-sm text-neutral-900 font-light flex flex-row gap-x-3  mb-5">
           -Published At {dayjs(blog?.publishedAt).format("DD MMM YYYY")}
           <span className="text-orange-400 bg-green-100 text-xs font-semibold px-3 rounded-lg ">{blog?.status}</span>
         </p>
@@ -124,8 +125,8 @@ const Blogdetail = () => {
         {/* tag and date section */}
 
         {/* summary */}
-        <div className="bg-gray-300 p-6 text-neutral-900 rounded-lg border-l-4 border-blue-500 mb-8">
-        <p className="text-lg font-semibold italic leading-relaxed pt-5 flex items-center max-w-7xl">
+        <div className="bg-gray-500 p-6 text-neutral-900 rounded-lg border-l-4 border-blue-500 mb-8">
+        <p className="text-lg font-semibold italic leading-relaxed pt-5 flex items-center text-cyan-300 max-w-7xl">
           {blog?.summary}
         </p>
         </div>
