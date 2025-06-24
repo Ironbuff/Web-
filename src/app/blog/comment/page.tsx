@@ -23,7 +23,7 @@ const Comment = ({ id }: { id: number | string }) => {
     const [CommentText, setCommentText] = useState("");
     const [comment, setComment] = useState<users[] | null>([])
     const [alerts, setAlerts] = useState('')
-    const api = "https://5m1ql0zh-7256.inc1.devtunnels.ms"
+    const api = process.env.NEXT_PUBLIC_API
     const [UserId, setUserId] = useState<string | null>('')
 
     const router = useRouter()

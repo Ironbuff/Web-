@@ -1,6 +1,7 @@
 "use client";
 import { postContact } from "@/lib/contact";
-import React, { useEffect, useState } from "react";
+import { useMutation } from "@tanstack/react-query";
+import React, { useState } from "react";
 import {
   FaEnvelope,
   FaFacebook,
@@ -18,31 +19,17 @@ const Contact = () => {
   const [description, setDescription] = useState("");
   const [agreeToTerms, setAgreeToTerms] = useState(false);
   const [submitMessage, setSubmitMessage] = useState("");
- 
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
 
-    if (
-      fullname === "" ||
-      companyLocation === "" ||
-      description === "" ||
-      email === "" ||
-      companyName === "" ||
-      email === ""
-    ) {
-      setSubmitMessage("All Field Value must be entered");
-    }
-
-    if (agreeToTerms === false) {
-      setSubmitMessage("Please agree the Terms");
-    }
-
-    try {
-     
-       await postContact({fullname,companyLocation,companyName,email,contact,description,agreeToTerms});
+  const mutation= useMutation({
+    mutationFn:async()=>{
+      await postContact({fullname,companyLocation,companyName,email,contact,description,agreeToTerms});
+    },
+    onSuccess:()=>{
       
       setSubmitMessage('Message Sucessfully Send')
+      setTimeout(()=>setSubmitMessage(""),3000)
+
       setFullname('')
       setEmail('')
       setCompanyLocation('')
@@ -50,11 +37,19 @@ const Contact = () => {
       setCompanyName('')
       setContact('')
       setDescription('')
-      setSubmitMessage('')
       
-    } catch (err) {
-      console.log(err);
+    },
+    onError:(err:any)=>{
+      alert("Unable to Send Message")
+      console.log(err)
     }
+  })
+ 
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    mutation.mutate()
+  
   };
 
 

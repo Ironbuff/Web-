@@ -1,12 +1,13 @@
 "use client";
 import { useParams } from "next/navigation";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import dayjs from "dayjs";
 import { GoArrowLeft } from "react-icons/go";
 import Link from "next/link";
 import { getblogById } from "@/lib/blog";
 import Loader from "@/components/loader/Loading";
 import Comment from "@/app/blog/comment/page";
+import { useQuery } from "@tanstack/react-query";
 
 const Blogdetail = () => {
 
@@ -23,30 +24,19 @@ const Blogdetail = () => {
    const api = "https://5m1ql0zh-7256.inc1.devtunnels.ms" 
   const params = useParams();
   const blogid = params.blogid as string;
-  const [blog, setBlog] = useState<Blogdata | null>(null);
-  const [loading, setLoading] = useState(true);
   const parsedId = parseInt(blogid); // convert to number
+  const id = parseInt(blogid)
 
 
-  useEffect(() => {
-    const fetch = async () => {
-      try {
-        const id = parseInt(blogid)
-        const result = await getblogById(id)
-        if (result.status === 200) {
-          setBlog(result.data)
-          setLoading(false)
-          }
-      
-         }
-      catch (err) {
-      console.log(err)
-       }
-    }
-   fetch()
-    }
-  
-  , []);
+
+  const {data:blog,isLoading}= useQuery<Blogdata>({
+    queryKey:['blog'],
+    queryFn: async()=>{
+      const result = await getblogById(id)
+      return result.data
+    },
+
+  })
   
     // --- Image Path Transformation and Sanitization ---
   const rawDescription = blog?.description || '';
@@ -77,7 +67,7 @@ const Blogdetail = () => {
    
 
 
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="flex items-center justify-center w-full h-[calc(100vh-12ch)]">
         <Loader/>

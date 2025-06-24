@@ -1,11 +1,14 @@
 'use client'
 
 import { login, refreshAccessToken } from '@/lib/auth';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import React, { useEffect, useState } from 'react'
+import React, { useEffect,  useState } from 'react'
 import { FaEnvelope, FaEye, FaEyeSlash } from 'react-icons/fa';
 import { IoLogInOutline } from "react-icons/io5";
 import { RiLockPasswordFill } from "react-icons/ri";
+import logo from "../../../public/logo.svg"
+import { useMutation } from '@tanstack/react-query';
 
 const Login = () => {
 
@@ -42,26 +45,19 @@ const Login = () => {
         return () => clearInterval(interval);
     }
 
-
-
-
-    useEffect(() => {
-        refresh()
-    }, [])
-
-
-
-    const handlesubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
-        try {
+    // mutation method for put post delete method in form
+    
+    const mutation = useMutation({
+        mutationFn:async()=>{
             const formdata = new FormData()
             formdata.set("email", email)
             formdata.set("password", password)
 
-            const result = await login(formdata)
-
-
-            if (result.status === 200) {
+           return await login(formdata)
+        },
+        // for sucess condition
+        onSuccess:(result)=>{
+           if (result.status === 200) {
                 alert("Login to System Successfully");
 
                 const data = result.data;
@@ -74,44 +70,59 @@ const Login = () => {
                 localStorage.setItem("UserId", data.user.userId);
 
                 router.push('/blog');
+            } 
+        },
+        onError:(err:any)=>{
+            if(err?.response?.status===401){
+                alert("Invalid Credentials")
             }
+            else{
+                alert("Something Went Wrong");
+                console.log(err)
+            }
+        }
+    })
 
 
-        }
-        catch (err: any) {
-            if (err?.response?.status === 401) {
-                alert("Please Enter The Correct Credential");
-            } else {
-                console.error(err);
-                alert("Something went wrong. Please try again.");
-            }
-        }
+
+    useEffect(() => {
+        refresh()
+    }, [])
+
+
+
+    const handlesubmit =  (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        
+        mutation.mutate()
     }
 
     return (
-        <section className='min-h-3/4  w-full px-6 md:px-10 lg:px-28 py-10 flex flex-col gap-y-6 items-center justify-center bg-gray-50 bg-[url(https://cdn.pixabay.com/photo/2024/09/12/06/02/ai-generated-9041388_1280.jpg)] bg-repeat bg-cover '>
+        <section className='min-h-3/4  w-full px-6 md:px-10 lg:px-28 py-10 flex flex-col gap-y-6 items-center justify-center bg-gray-200  '>
 
             {/* heading for login */}
-            <div className='flex items-center justify-center py-5 w-full relative'>
-                <h1 className='text-3xl font-semibold leading-relaxed text-cyan-600'>
-                    Welcome Back !!
-                </h1>
-                <span className='h-[1px] w-[20%] opacity-20 absolute bottom-[-5] bg-cyan-900'>
 
-                </span>
-            </div>
 
             {/* form for login */}
-            <div className='lg:w-[70%] w-full  mx-auto flex h-full items-center justify-center'>
+            <div className='lg:w-2/5 w-full flex flex-col gap-y-3 h-full items-center shadow-md rounded-lg bg-neutral-100/60 justify-center'>
+
+                <div className='flex items-center justify-center py-3 w-full relative'>
+                    <Image src={logo} width={120} height={120} alt='Logo Section' />
+                    <span className='h-[2px] w-[20%] opacity-50 absolute bottom-[-5] bg-cyan-800'>
+
+                    </span>
+                </div>
+
+
                 <form
                     onSubmit={handlesubmit}
-                    className='flex flex-col gap-y-3 px-10 py-10 items-start justify-center lg:w-3/5 w-full mx-auto bg-neutral-700/50 backdrop-blur-lg rounded-xl'>
+                    className='flex flex-col gap-y-3 px-10  py-10 items-start justify-center  w-full mx-auto '>
 
 
 
                     {/* Email */}
                     <div className='flex flex-col gap-y-2 w-full '>
-                        <label htmlFor='Email' className='text-lg text-neutral-300 font-medium'>
+                        <label htmlFor='Email' className='text-lg text-neutral-900 font-medium'>
                             Email:
                         </label>
                         <div className='flex flex-row gap-x-2 bg-gray-200/50 shadow-md rounded-xl px-3 w-full items-center hover:ring-2 hover:ring-blue-500'>
@@ -130,7 +141,7 @@ const Login = () => {
 
                     {/* password */}
                     <div className='flex flex-col gap-y-2 w-full'>
-                        <label htmlFor='Email' className='text-lg text-neutral-300 font-medium'>
+                        <label htmlFor='Email' className='text-lg text-neutral-900 font-medium'>
                             Password:
                         </label>
                         <div className='flex relative flex-row gap-x-2 bg-gray-200/50 shadow-md rounded-xl px-3 w-full items-center hover:ring-2 hover:ring-blue-500 '>
@@ -150,7 +161,7 @@ const Login = () => {
 
                             <span className='top-0 right-0'>
                                 <button type='button' onClick={() => setSeepassword(!seepassword)}>
-                                    {seepassword ? <FaEye size={22}  className='text-cyan-300'/> : <FaEyeSlash size={22} className='text-cyan-400' />}
+                                    {seepassword ? <FaEye size={22} className='text-cyan-300' /> : <FaEyeSlash size={22} className='text-cyan-400' />}
                                 </button>
                             </span>
                         </div>
@@ -163,7 +174,7 @@ const Login = () => {
                         <button type='submit' className='p-3 w-full rounded-xl bg-cyan-600 hover:bg-cyan-700 ease-in-out transition-all duration-300 text-neutral-100 shadow-md flex flex-row gap-x-2 items-center justify-center '>
                             Log In <IoLogInOutline size={22} />
                         </button>
-                        <p className='text-center text-neutral-200'>
+                        <p className='text-center text-neutral-800'>
                             Dont have a account???
                             <a href='/sign' className='text-cyan-600 hover:underline ease-in-out duration-300 transition-all px-2'>
                                 Sign In

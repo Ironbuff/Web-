@@ -3,6 +3,8 @@
 import React, { useEffect, useState } from 'react';
 import { Check } from 'lucide-react';
 import { getPrice } from '@/lib/pricing';
+import { useQuery } from '@tanstack/react-query';
+import Loader from '@/components/loader/Loading';
 
 
 const PricingPlans = () => {
@@ -26,19 +28,24 @@ const PricingPlans = () => {
 
     const [billingCycle, setBillingCycle] = useState('yearly');
     const [darkmodefall, setDarkmodefall] = useState<null | number>(null)
-    const [plans, setPlans] = useState<price[]>([])
+    
     const[discount,setDiscount]= useState<number|null>(null)
    
-
+    const {data:plans=[], isLoading} = useQuery<price[]>({
+        queryKey:["plans"],
+        queryFn:async()=>{
+            const response = await getPrice()
+            return response.data
+        }
+    })
 
 
 
 
     useEffect(() => {
         const fetch = async () => {
-            const result = await getPrice()
-            setPlans(result.data)
-            const pro = result.data.find(item=>item.name==="Pro")
+       
+            const pro = plans?.find(item=>item.name==="Pro")
             const discount = pro?.discount
             setDiscount(discount)
 
@@ -52,6 +59,7 @@ const PricingPlans = () => {
 
     return (
         <div className='lg:h-screen h-full lg:max-w-screen w-full lg:px-28 px-5 py-10'>
+           
 
             {/* Top Heading */}
             <div className='flex flex-col gap-y-5 items-center justify-center'>
@@ -94,6 +102,11 @@ const PricingPlans = () => {
                     </div>
                 </div>
             </div>
+             {isLoading &&(
+                <div className='flex flex-row py-5 items-center justify-center'>
+                      <Loader/>
+                </div>
+            )}
 
             {/* Bottom Heading */}
             <div className='grid lg:grid-cols-3 grid-cols-1 mx-auto space-y-5  py-20'>

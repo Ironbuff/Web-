@@ -1,9 +1,10 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { MdKeyboardArrowRight } from 'react-icons/md'
 import Image from 'next/image'
 import { gethero } from '@/lib/hero'
+import { useQuery } from '@tanstack/react-query'
 
 const Hero = () => {
   
@@ -22,19 +23,20 @@ interface hero {
 
     
  
- const [landing,setLanding] = useState<hero|null>(null)
+ 
 
-  const api = "https://5m1ql0zh-7256.inc1.devtunnels.ms"
+  const api = process.env.NEXT_PUBLIC_API
 
   
-  
-  useEffect(()=>{
-    const fetch = async()=>{
-        const response =  await gethero()
-        setLanding(response.data)
+  const {data:landing}= useQuery<hero>({
+    queryKey:['landing'],
+    queryFn:async()=>{
+         const response =  await gethero()
+         return response.data
     }
-    fetch()
-  },[])
+  })
+  
+  
   
   
   

@@ -1,13 +1,14 @@
 "use client";
 
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { GoArrowRight } from "react-icons/go";
 import dayjs from "dayjs";
 import Link from "next/link";
 import { getblog } from "@/lib/blog";
 import Loader from "@/components/loader/Loading";
 import { motion } from "framer-motion";
+import { useQuery } from "@tanstack/react-query";
 
 const Blog = () => {
   interface blog {
@@ -21,17 +22,17 @@ const Blog = () => {
     thumbnail: string;
   }
 
-  const [blogs, setBlogs] = useState<blog[]>([]);
   const [filteredBlogs, setFilteredBlogs] = useState<blog[] | null>(null)
-  const api = "https://5m1ql0zh-7256.inc1.devtunnels.ms";
+  const api = process.env.NEXT_PUBLIC_API;
 
-  useEffect(() => {
-    const fetch = async () => {
-      const result = await getblog();
-      setBlogs(result.data);
-    };
-    fetch();
-  }, []);
+
+  const {data:blogs=[],isLoading} = useQuery<blog[]>({
+    queryKey:['blogs'],
+    queryFn: async()=>{
+      const result = await getblog()
+      return result.data
+    },
+  })
 
   const Newfetch = (tag: string) => {
     const filtered = blogs.filter(item => item.tags.includes(tag))
@@ -89,7 +90,7 @@ const Blog = () => {
       )}
 
       {/* Loader */}
-      {blogs.length <= 0 && (
+      {isLoading && (
         <div className="flex flex-row items-center justify-center">
           <Loader />
         </div>
