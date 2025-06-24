@@ -2,9 +2,10 @@
 
 import { Star } from "lucide-react";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { motion } from 'framer-motion';
 import { getCustomerReview } from "@/lib/review";
+import { useQuery } from "@tanstack/react-query";
 
 const Customer = () => {
 
@@ -18,15 +19,21 @@ const Customer = () => {
 
   }
   
-  const [reviews,setReviews]= useState<data[]>([])
 
-  useEffect(()=>{
-    const fetch = async()=>{
-      const result = await getCustomerReview()
-      setReviews(result?.data)
+
+
+  const {data:reviews=[],isError}= useQuery<data[]>({
+    queryKey:["review"],
+    queryFn:async()=>{
+      const response = await getCustomerReview()
+      return response?.data
     }
-    fetch()
-  },[])
+  })
+  
+  if(isError||!reviews){
+    alert("Failed to fetch data")
+  }
+
   
   
   const api = "https://5m1ql0zh-7256.inc1.devtunnels.ms"

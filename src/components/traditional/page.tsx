@@ -25,9 +25,9 @@ const Traditional = () => {
     const[description,setDescription] = useState('')
     const[footer,setFooter]= useState('')
     const[data,setData]=useState<format|null>(null)
-    const api = "https://5m1ql0zh-7256.inc1.devtunnels.ms"
+    const api = process.env.NEXT_PUBLIC_API
 
-
+   
     useEffect(()=>{
         const fetch = async()=>{
             const result = await traditional()

@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React, {  useState } from 'react'
 import profile from '../../../public/Blog.svg'
 import Image from 'next/image'
 import { IoIosArrowDown } from 'react-icons/io'
@@ -10,6 +10,7 @@ import { FaX } from 'react-icons/fa6'
 
 import Link from 'next/link'
 import { getnavitems } from '@/lib/nav'
+import { useQuery } from '@tanstack/react-query'
 
 
 const Navbar = () => {
@@ -33,27 +34,29 @@ const Navbar = () => {
 
     }
     
-    const [navitems, setNavitems] = useState<data[]>([])
+   
     const [mobilenav, setMobilenav] = useState(false)
     const [isdropped, setIsdropped] = useState<number|null>(null)
    
-   const api = "https://5m1ql0zh-7256.inc1.devtunnels.ms"
+   const api = process.env.NEXT_PUBLIC_API
 
+
+   const {data:navitems=[],isError}= useQuery<data[]>({
+    queryKey:["navitems"],
+    queryFn:async()=>{
+        const response = await getnavitems()
+        return response?.data
+    }
+   })
+
+   if(isError){
+    alert("Failed to load data")
+   }
   
    
 
 
-    const fetch = async () => {
-        const response = await getnavitems()
-        setNavitems(response?.data || [])
-        
-    }
-
-    useEffect(() => {
-        fetch()
-        // Removed the problematic navitems.map() line
-    }, [])
-
+   
     return (
         <nav className='w-full relative sticky top-0 flex backdrop-blur-3xl flex-row justify-between md:h-[12ch] h-[9ch] bg-white/60 md:px-28 px-5 md:shadow-transparent shadow-md z-50'>
             {/* Image Section */}

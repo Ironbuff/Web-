@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import {
     Accordion,
     AccordionContent,
@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/accordion"
 import { MdKeyboardArrowDown } from 'react-icons/md';
 import { getfaq } from '@/lib/faq';
+import { useQuery } from '@tanstack/react-query';
 
 const Faq = () => {
 
@@ -19,43 +20,15 @@ const Faq = () => {
         answer:string,
     }
 
-    // const accordionData = [
-    //     {
-    //         id: "1",
-    //         title: "What is SumX?",
-    //         content: "SumX is an AI-integrated project management and accounting platform designed to streamline business operations, enhance productivity, and provide real-time insights for better decision-making."
-    //     },
-    //     {
-    //         id: "2",
-    //         title: "How does the AI integration work?",
-    //         content: "Our AI system automates routine tasks, provides intelligent insights, predicts project outcomes, and helps optimize resource allocation. It learns from your data patterns to continuously improve recommendations and efficiency."
-    //     },
-    //     {
-    //         id: "3",
-    //         title: "What are the pricing plans?",
-    //         content: "We offer flexible pricing starting at $10/user per month with no long-term commitments. Plans include Starter, Professional, and Enterprise tiers, each with different features and capabilities to match your business needs."
-    //     },
-    //     {
-    //         id: "4",
-    //         title: "How quickly can we implement SumX?",
-    //         content: "Implementation is typically completed within 1-2 weeks. Our plug-and-play setup requires minimal training, and our support team provides comprehensive onboarding to ensure smooth adoption."
-    //     },
-    //     {
-    //         id: "5",
-    //         title: "Is SumX scalable for growing businesses?",
-    //         content: "Absolutely! SumX is built to scale with your business. Whether you're a small startup or a large enterprise, our platform adapts to your changing needs with customizable features and flexible user management."
-    //     }
-    // ];
+    
 
-    const [accordionData,setAccordionData] = useState<accordin[]>([])
-
-    useEffect(()=>{
-        const fetch= async()=>{
-            const result= await getfaq()
-            setAccordionData(result.data)
+    const {data:accordionData=[]}= useQuery<accordin[]>({
+        queryKey: ["accordionData"],
+        queryFn:async()=>{
+            const response = await getfaq()
+            return response.data
         }
-        fetch()
-    },[])
+    })
 
 
     return (

@@ -1,9 +1,10 @@
 'use client'
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Image from "next/image";
 import "./Slider.css";
 import { getcarouselimg } from "@/lib/nav";
+import { useQuery } from "@tanstack/react-query";
 
 const Slider = () => {
   
@@ -15,20 +16,21 @@ const Slider = () => {
 
  }
 
-  const [heading,setHeading]= useState('')
-  const [images,setImages] = useState<images[]>([])
-  const api = "https://5m1ql0zh-7256.inc1.devtunnels.ms"
+  const api = process.env.NEXT_PUBLIC_API
 
-   useEffect(() => {
-   
-    const fetch = async()=>{
-      const result = await getcarouselimg()
-      setHeading(result?.data.body)
-      setImages(result?.data.medias)
-      
+
+  const {data:result}= useQuery({
+    queryKey:["result"],
+    queryFn:async()=>{
+      const response = await getcarouselimg()
+      return response?.data
     }
-     fetch()
-  }, [])
+  })
+
+  const heading = result?.body||""
+  const images:images[]= result?.medias||[]
+
+  
 
   const loopImages = [...images, ...images]; // duplicate for smooth loop
   
