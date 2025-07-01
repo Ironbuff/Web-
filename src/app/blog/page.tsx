@@ -9,6 +9,7 @@ import { getblog } from "@/lib/blog";
 import Loader from "@/components/loader/Loading";
 import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
+import Pagination from "@/components/pagination/Pagination";
 
 const Blog = () => {
   interface blog {
@@ -23,7 +24,9 @@ const Blog = () => {
   }
 
   const [filteredBlogs, setFilteredBlogs] = useState<blog[] | null>(null)
+  const[currentpage,setCurrentpage]= useState(1)
   const api = process.env.NEXT_PUBLIC_API;
+  const itemperpage = 3
 
 
   const {data:blogs=[],isPending} = useQuery<blog[]>({
@@ -39,9 +42,15 @@ const Blog = () => {
     setFilteredBlogs(filtered)
   }
 
+
+  const totalblogs = (filteredBlogs||blogs).filter(item=>item.status==="Active")
+  const totalpages = Math.ceil (totalblogs.length/itemperpage)
+  const paginatedblogs = totalblogs.slice((currentpage-1)*itemperpage,currentpage*itemperpage)
+  
   // to reset 
   const reset = () => {
     setFilteredBlogs(null)
+    setCurrentpage(1)
   }
 
   // Generate tag count map
@@ -98,9 +107,7 @@ const Blog = () => {
 
       {/* Blog Cards */}
       <div className="grid lg:grid-cols-3 grid-cols-1 gap-5 w-full h-full rounded-xl">
-        {(filteredBlogs ? filteredBlogs : blogs)
-          .filter((b) => b.status === "Active")
-          .map((items) => (
+        {paginatedblogs.map((items) => (
             <motion.div
               whileHover={{ scale: 1.02 }}
               key={items.id}
@@ -152,6 +159,12 @@ const Blog = () => {
             </motion.div>
           ))}
       </div>
+
+      <Pagination
+      currentpage={currentpage}
+      totalpages={totalpages}
+      setCurrentpage={setCurrentpage}
+      />
     </section>
   );
 };
