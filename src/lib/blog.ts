@@ -1,15 +1,14 @@
-import axios from 'axios'
-
-const api = process.env.NEXT_PUBLIC_API
+import { axiosInstance } from '@/components/axios/axiosInstance'
 
 
-export const getblog = async()=>{
-    const response = await axios.get(`${api}/api/BlogApi/getblogs`)
+
+export const getblog = async () => {
+    const response = await axiosInstance.get('/BlogApi/getblogs')
     return response
 }
 
 
-export const getblogById = async(id:number)=>{
-    const response = await axios.get(`${api}/api/BlogApi/getBlogById/${id}`)
+export const getblogById = async (id: number) => {
+    const response = await axiosInstance.get(`/BlogApi/getBlogById/${id}`)
     return response
 }

@@ -11,6 +11,7 @@ import { FaX } from 'react-icons/fa6'
 import Link from 'next/link'
 import { getnavitems } from '@/lib/nav'
 import { useQuery } from '@tanstack/react-query'
+import { toast } from 'react-toastify'
 
 
 const Navbar = () => {
@@ -50,7 +51,7 @@ const Navbar = () => {
    })
 
    if(isError){
-    alert("Failed to load data")
+    toast.error("Failed to Load the Data")
    }
   
    

@@ -1,9 +1,11 @@
 'use client'
 
 import { traditional } from '@/lib/traditional'
+import { useQuery } from '@tanstack/react-query'
 import Image from 'next/image'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { MdKeyboardArrowRight } from 'react-icons/md'
+import { toast } from 'react-toastify'
 
 const Traditional = () => {
     
@@ -19,27 +21,32 @@ const Traditional = () => {
         heading:string,
         footing:string,
         medias:img[],
+        body:string,
     }
     
-    const[title,setTitle]= useState('')
-    const[description,setDescription] = useState('')
-    const[footer,setFooter]= useState('')
-    const[data,setData]=useState<format|null>(null)
+  
     const api = process.env.NEXT_PUBLIC_API
 
    
-    useEffect(()=>{
-        const fetch = async()=>{
-            const result = await traditional()
-            setTitle(result.data.heading)
-            setDescription(result.data.body)
-            setFooter(result.data.footing)
-            setData(result.data)
-            
+    const {data:result, isError}= useQuery<format>({
+        queryKey:["result"],
+        queryFn:async()=>{
+            const response = await traditional()
+            return response?.data
         }
-        fetch()
-    },[])
+    })
 
+
+    if(isError){
+        toast.error("failed to load data")
+    }
+
+    const title = result?.heading;
+    const description = result?.body;
+    const footer = result?.footing;
+    const data:format|null = result?.data
+   
+   
     return (
         <div className='w-full  h-[40rem] flex items-center justify-center'>
             <div className='flex flex-col relative overflow-hidden max-w-7xl bg-cyan-100 gap-y-5  max-h-102 my-auto h-full mx-auto items-center bg justify-center px-20 rounded-2xl'>

@@ -10,7 +10,8 @@ export const signupschema = z.object({
     .min(6,"Password must be 6 length long")
     .regex(/[a-z]/,"Must be atleast one small letter")
     .regex(/[A-Z]/,"Must be atleast one capital letter")
-    .regex(/[!@#$%^&*(){}]/,"Must Contain atleast one Special letter"),
+    .regex(/[!@#$%^&*(){}]/,"Must Contain atleast one Special letter")
+    .regex(/[0-9]/,"Must Contain atleast one number"),
     profilePicture:z.any().optional() //file cannot be validated by
 
 })

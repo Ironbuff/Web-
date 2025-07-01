@@ -1,11 +1,9 @@
-import axios from 'axios'
+import { axiosInstance } from '@/components/axios/axiosInstance';
 
-
-const api = process.env.NEXT_PUBLIC_API
 export  const getnavitems = async()=>{
 
    try{
-      const response = await axios.get(`${api}/api/CommonApi/getnavbaritems`)
+      const response = await axiosInstance.get('/CommonApi/getnavbaritems')
       return response;
    }
    catch(err){
@@ -16,7 +14,7 @@ export  const getnavitems = async()=>{
 export const getcarouselimg = async() => {
    try{
 
-      const response = await axios.get(`${api}/api/ContentApi/getcontent/Carousel`)
+      const response = await axiosInstance.get('/ContentApi/getcontent/Carousel')
       return response
    }
    catch(err){

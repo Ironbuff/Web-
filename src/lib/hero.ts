@@ -1,9 +1,8 @@
-import axios from'axios'
+import { axiosInstance } from '@/components/axios/axiosInstance'
 
-const api = process.env.NEXT_PUBLIC_API
 
 export const gethero = async()=>{
    
-    const response = await axios.get(`${api}/api/ContentApi/getcontent/Hero Section`)
+    const response = await axiosInstance.get('/ContentApi/getcontent/Hero Section')
     return response
 }

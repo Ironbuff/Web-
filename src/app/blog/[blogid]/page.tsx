@@ -21,7 +21,7 @@ const Blogdetail = () => {
     status: string
   }
 
-   const api = "https://5m1ql0zh-7256.inc1.devtunnels.ms" 
+   const api = process.env.NEXT_PUBLIC_API
   const params = useParams();
   const blogid = params.blogid as string;
   const parsedId = parseInt(blogid); // convert to number
@@ -45,7 +45,7 @@ const Blogdetail = () => {
   // 1. Start with '/' (relative paths)
   // 2. DO NOT already start with the API_FILE_SERVER_BASE_URL
   const imgPathRegex = new RegExp(
-    `<img([^>]+)src=["'](\\/(?!${api.replace(/\//g, '\\/')}\\/)[^"']+)["']([^>]*)>`,
+    `<img([^>]+)src=["'](\\/(?!${api?.replace(/\//g, '\\/')}\\/)[^"']+)["']([^>]*)>`,
     'g'
   );
   // Explanation of the new regex:

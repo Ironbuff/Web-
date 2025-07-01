@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { motion } from "motion/react";
 import { getchose } from "@/lib/chose";
 import { useQuery } from "@tanstack/react-query";
+import { toast } from "react-toastify";
 
 const Choose = () => {
 
@@ -31,7 +32,7 @@ const Choose = () => {
   })
 
   if (isError) {
-    alert("failed to load data")
+   toast.error("Failed to Load Data")
   }
 
   const summary = data?.data.body || "";

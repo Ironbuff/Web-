@@ -1,10 +1,9 @@
-import axios from 'axios'
+import { axiosInstance } from '@/components/axios/axiosInstance'
 
-const api = process.env.NEXT_PUBLIC_API
 
 export const getCustomerReview = async()=>{
     try{
-            const response = await axios.get(`${api}/api/TestimonialApi/get`)
+            const response = await axiosInstance.get("/TestimonialApi/get")
             return response
     }
     catch(err){

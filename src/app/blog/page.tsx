@@ -26,7 +26,7 @@ const Blog = () => {
   const api = process.env.NEXT_PUBLIC_API;
 
 
-  const {data:blogs=[],isLoading} = useQuery<blog[]>({
+  const {data:blogs=[],isPending} = useQuery<blog[]>({
     queryKey:['blogs'],
     queryFn: async()=>{
       const result = await getblog()
@@ -90,7 +90,7 @@ const Blog = () => {
       )}
 
       {/* Loader */}
-      {isLoading && (
+      {isPending && (
         <div className="flex flex-row items-center justify-center">
           <Loader />
         </div>

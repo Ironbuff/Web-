@@ -1,8 +1,7 @@
-import axios from "axios";
+import { axiosInstance } from "@/components/axios/axiosInstance";
 
-const api = process.env.NEXT_PUBLIC_API
 
 export const traditional = async()=>{
-   const response = await axios.get(`${api}/api/ContentApi/getcontent/Say Goodbye`)
+   const response = await axiosInstance.get("/ContentApi/getcontent/Say Goodbye")
    return response
 }

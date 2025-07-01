@@ -1,10 +1,9 @@
-import axios from 'axios'
+import { axiosInstance } from '@/components/axios/axiosInstance';
 
-const api = process.env.NEXT_PUBLIC_API
 
 export const login = async(formdata:FormData)=>{
 
-    const response = await axios.post(`${api}/api/Auth/Signin`,formdata,{
+    const response = await axiosInstance.post(`/Auth/Signin`,formdata,{
         headers:{
             'Content-Type':'multipart/formData'
         }
@@ -14,7 +13,7 @@ export const login = async(formdata:FormData)=>{
 
 
 export const register = async(formdata:FormData)=>{
-    const response = await axios.post(`${api}/api/Auth/Signup`,formdata,{
+    const response = await axiosInstance.post(`/Auth/Signup`,formdata,{
         headers:{
             'Content-Type':'multipart/formData'
         }
@@ -37,10 +36,7 @@ export const refreshAccessToken = async()=>{
         accessToken,
     }
 
-    const response = await axios.post(`${api}/api/Auth/refreshsignin`, data, {
-        headers: { "Content-Type": "application/json" },
-    });
-
+    const response = await axiosInstance.post(`/Auth/refreshsignin`, data)
     if (response.status === 200) {
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("acessTokenExpiresIn", response.data.tokenExpires);

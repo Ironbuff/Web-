@@ -36,7 +36,7 @@ const Customer = () => {
 
   
   
-  const api = "https://5m1ql0zh-7256.inc1.devtunnels.ms"
+  const api = process.env.NEXT_PUBLIC_API
   
   const rightreview = reviews.slice(0, 3);
   const centerreview = reviews.slice(3, 6);

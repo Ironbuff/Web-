@@ -1,6 +1,5 @@
-import axios from "axios";
+import { axiosInstance } from "@/components/axios/axiosInstance";
 
-const api = process.env.NEXT_PUBLIC_API
 
 export const postContact = async(
     data:{
@@ -13,11 +12,7 @@ export const postContact = async(
         agreeToTerms:boolean,
     }
 )=>{
-    const response = await axios.post(`${api}/api/ContactUsApi/post`,data,{
-        headers:{
-            'Content-Type':'application/json'
-        }
-    })
+    const response = await axiosInstance.post(`/ContactUsApi/post`,data)
     return response
 
 }
